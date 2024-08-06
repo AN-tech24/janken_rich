@@ -7,9 +7,9 @@
 前回課題時のフィードバックを受けてプレイヤーとなる夕飯数、そして、その対象まで選べるようにしました。
 
 ③DEMO
-[デプロイしている場合はURLを記入（任意）
-](https://gsdeploy.sakura.ne.jp/janken_rich/newindex.html
+[(https://gsdeploy.sakura.ne.jp/janken_rich/newindex.html
 )
+
 ④作ったアプリケーション用のIDまたはPasswordがある場合
 ID: 〇〇〇〇〇〇〇〇
 PW: 〇〇〇〇〇〇〇〇
