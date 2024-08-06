@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+      integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+    <link rel="stylesheet" media="screen" href="css/newindex.css">
+  </head>
+  <body>
+    <div id="app">
+      <h1>夕飯対決双六　今日の献立チャンピオンを決めろ</h1>
+      <div>
+        <div class="text-center mt-3" v-if="!selectedPlayers">
+          <h2>プレイヤーの人数を選んでください</h2>
+          <div class="btn-group" role="group" aria-label="プレイヤーの人数">
+            <button type="button" class="btn btn-primary ml-2" @click="selectPlayers(2)">2人</button>
+            <button type="button" class="btn btn-primary ml-2" @click="selectPlayers(3)">3人</button>
+            <button type="button" class="btn btn-primary ml-2" @click="selectPlayers(4)">4人</button>
+          </div>
+        </div>
+        <div class="text-center mt-3" v-else-if="selectedPlayers && !isAllSelected">
+          <h2>プレイヤー{{selectNumber}}を選んでください</h2>
+          <div class="row justify-content-center">
+            <div class="col-1" v-for="player in players" :key="player.id">
+              <img :class="{ 'hover-border': player.id === highlightedIndex }"
+                   :src="player.image"
+                   v-if="!isCharaSelected(player.id)"
+                   @mouseover="highlightImage(player.id)"
+                   @click="selectCharacter(player)">
+              <p v-if="!isCharaSelected(player.id)">{{ player.name }}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <table class="table table-bordered mt-4">
+        <tbody>
+          <tr class="table-success">
+            <td>現在のターン</td>
+            <td>プレイヤー{{ turn }} {{ CharacterName(turn) }}</td>
+          </tr>
+          <tr v-if="selectedPlayers" v-for="num in selectedPlayers" class="table-primary">
+            <td>プレイヤー{{ num }} {{ CharacterName(num) }}の位置</td>
+            <td>{{ CharacterPositon(num) }}</td>
+          </tr>
+          <tr class="table-info">
+            <td>プレイヤー{{ played }} {{ CharacterName(played) }}の出た目</td>
+            <td>{{ dice }}</td>
+          </tr>
+        </tbody>
+      </table>
+      <button v-if="isAllSelected && !isGameOver" @click="rollDice" class="btn btn-primary">プレイヤー{{turn}}：{{CharacterName(turn)}}のターン</button>
+      <div class="mt-3">
+        <div v-for="cell in cells" :class="['cell', { events: events.includes(cell) }]">
+          {{ cell}}
+          <img v-for="character in selectedCharacters" v-if="cell === character.position" :src="character.image" :alt="character.name">
+        </div>
+      </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
+    <script src="js/newindex.js"></script>
+  </body>
+</html>
